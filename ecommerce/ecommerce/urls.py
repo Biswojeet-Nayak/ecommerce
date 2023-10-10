@@ -14,9 +14,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+# ecommerce/urls.py
+
 from django.urls import path
+from django.http import HttpResponse
+from .views import ProductListCreateView, ProductRetrieveUpdateDestroyView
+
+
+def root_view(request):
+    return HttpResponse("Welcome to the My E-Commerce API!")
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', root_view, name='root'),
+    path('products/', ProductListCreateView.as_view(), name='product-list-create'),
+    path('products/<int:pk>/', ProductRetrieveUpdateDestroyView.as_view(), name='product-detail'),
 ]
